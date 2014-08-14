@@ -1,0 +1,42 @@
+# Icinga Web 2 - Head for multiple monitoring backends.
+# Copyright (C) 2014 Icinga Development Team
+# This file is distributed under the same license as Icinga Web 2.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Icinga Web 2 (0.1)\n"
+"Report-Msgid-Bugs-To: dev@icinga.org\n"
+"POT-Creation-Date: 2014-08-14 18:48+0200\n"
+"PO-Revision-Date: 2014-08-14 18:50+0100\n"
+"Last-Translator: Thomas Gelf <thomas@gelf.net>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: /usr/local/src/icingaweb2-module-prototypes/pnp4nagios/library/Pnp4nagios/Grapher.php:211
+msgid "25 Hours"
+msgstr "25 Stunden"
+
+#: /usr/local/src/icingaweb2-module-prototypes/pnp4nagios/library/Pnp4nagios/Grapher.php:210
+msgid "4 Hours"
+msgstr "4 Stunden"
+
+#: /usr/local/src/icingaweb2-module-prototypes/pnp4nagios/application/controllers/ConfigController.php:11
+#, php-format
+msgid "Configuration form is still missing in this prototype. In case your PNP4Nagios config path is not %s or your base PNP4Nagios web url differs from %s please create a config file in %s following this example:"
+msgstr "Dieser Prototyp stellt noch kein Konfigurationsformular bereit. Sollte dein PNP4Nagios Konfigurationspfad nicht %s sein oder deine PNP4Nagios URL sich von %s unterscheiden erstelle bitte unter %s eine dem folgenden Beispiel entprechende Konfigurationsdatei:"
+
+#: /usr/local/src/icingaweb2-module-prototypes/pnp4nagios/library/Pnp4nagios/Grapher.php:213
+msgid "One Month"
+msgstr "Ein Monat"
+
+#: /usr/local/src/icingaweb2-module-prototypes/pnp4nagios/library/Pnp4nagios/Grapher.php:212
+msgid "One Week"
+msgstr "Eine Woche"
+
+#: /usr/local/src/icingaweb2-module-prototypes/pnp4nagios/library/Pnp4nagios/Grapher.php:214
+msgid "One Year"
+msgstr "Ein Jahr"
+
