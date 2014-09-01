@@ -4,10 +4,10 @@ namespace Icinga\Module\Pnp4nagios;
 
 use Icinga\Application\Config;
 use Icinga\Exception\ConfigurationError;
-use Icinga\Web\Hook\Grapher as IcingaGrapher;
+use Icinga\Web\Hook\GrapherHook;
 use Icinga\Web\Url;
 
-class Grapher extends IcingaGrapher
+class Grapher extends GrapherHook
 {
     protected $hasPreviews = true;
 
