@@ -4,6 +4,9 @@ namespace Icinga\Module\Pnp4nagios;
 
 use Icinga\Application\Config;
 use Icinga\Exception\ConfigurationError;
+use Icinga\Module\Monitoring\Object\MonitoredObject;
+use Icinga\Module\Monitoring\Object\Host;
+use Icinga\Module\Monitoring\Object\Service;
 use Icinga\Web\Hook\GrapherHook;
 use Icinga\Web\Url;
 
@@ -30,19 +33,32 @@ class Grapher extends GrapherHook
         $this->readPnpConfig();
     }
 
-    public function hasGraph($host, $service = null, $plot = null)
+    public function has(MonitoredObject $object)
     {
-        if ($service === null) {
+        if ($object instanceof Host) {
             $service = '_HOST_';
+        } elseif ($object instanceof Service) {
+            $service = $object->service_description;
+        } else {
+            return false;
         }
+
+        $host = $object->host_name;
         return is_file($this->getRrdFilename($host, $service));
     }
 
-    public function getPreviewImage($host, $service = null, $plot = null)
+    public function getPreviewImage(MonitoredObject $object)
     {
-        if ($service === null) {
+        if ($object instanceof Host) {
             $service = '_HOST_';
+        } elseif ($object instanceof Service) {
+            $service = $object->service_description;
+        } else {
+            return '';
         }
+
+        $host = $object->host_name;
+
         $html = '<table style="width: 100%; max-width: 40em; text-align: center;'
               . ' font-size: 0.8em; line-height: 0.8em; table-layout: fixed">'
               . "\n  <tr>\n";
@@ -74,11 +90,6 @@ class Grapher extends GrapherHook
             urlencode($this->pnpClean($host)),
             urlencode($this->pnpClean($service))
         );
-    }
-
-    public function getGraphUrl($host, $service = null, $plot = null)
-    {
-        // Do we really want something like this?
     }
 
     // This reads the PNP4Nagios config and makes it's $conf available
