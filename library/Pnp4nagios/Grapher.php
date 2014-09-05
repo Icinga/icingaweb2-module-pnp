@@ -47,7 +47,7 @@ class Grapher extends GrapherHook
         return is_file($this->getRrdFilename($host, $service));
     }
 
-    public function getPreviewImage(MonitoredObject $object)
+    public function getPreviewHtml(MonitoredObject $object)
     {
         if ($object instanceof Host) {
             $service = '_HOST_';
