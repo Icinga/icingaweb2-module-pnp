@@ -6,12 +6,7 @@ class Pnp4nagios_IndexController extends ActionController
 {
     public function indexAction()
     {
-        $baseUrl = '/pnp4nagios';
-        $config = $this->Config()->get('pnp4nagios');
-
-        if ($config) {
-            $baseUrl = rtrim($config->get('base_url', $baseUrl), '/');
-        }
+        $baseUrl = rtrim($this->Config()->get('pnp4nagios', 'base_url', '/pnp4nagios'), '/');
 
         $this->view->url = sprintf(
              '%s/graph?host=%s&srv=%s&view=%d',
