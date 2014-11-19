@@ -24,12 +24,9 @@ class Grapher extends GrapherHook
 
     protected function init()
     {
-        $cfg = Config::module('pnp4nagios')->get('pnp4nagios');
-        if ($cfg) {
-            $this->configDir = rtrim($cfg->get('config_dir', $this->configDir), '/');
-            $this->baseUrl   = rtrim($cfg->get('base_url', $this->baseUrl), '/');
-        }
-
+        $cfg = Config::module('pnp4nagios')->getSection('pnp4nagios');
+        $this->configDir = rtrim($cfg->get('config_dir', $this->configDir), '/');
+        $this->baseUrl   = rtrim($cfg->get('base_url', $this->baseUrl), '/');
         $this->readPnpConfig();
     }
 
