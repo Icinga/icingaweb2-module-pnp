@@ -7,8 +7,9 @@ installation in your
 [Icinga Web 2](https://www.icinga.org/icinga/screenshots/icinga-web-2/) web
 frontend.
 
-> ** Note **
-> 
+
+> **Note**
+>  
 > This is a showcase module and to be considered an unsupported prototype
 > unless explicitely stated otherwise.
 
