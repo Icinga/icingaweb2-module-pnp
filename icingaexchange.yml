@@ -1,0 +1,18 @@
+name: PNP4Nagios
+description: "file:///README.md"
+url: "https://dev.icinga.org/projects/icingaweb2-module-pnp4nagios"
+tags: PNP4Nagios, Charts, RRD, Performance Data
+vendor: Icinga
+target: Icinga Web 2
+type: Module
+license: gplv2
+releases:
+  -
+    name: v1.0.0
+    description: "Current"
+    files:
+      -
+        name: icingaweb2-module-pnp4nagios.zip
+        url: "file:///icingaweb2-module-pnp4nagios.zip"
+        description: Module file for Icinga Web 2
+        checksum: ab7529dde9974fbd2a579e3560b23c14
