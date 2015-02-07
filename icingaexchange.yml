@@ -8,7 +8,7 @@ type: Module
 license: gplv2
 releases:
   -
-    name: v1.0.0
+    name: v0.0.9
     description: "Current"
     files:
       -
