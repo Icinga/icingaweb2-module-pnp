@@ -1,8 +1,8 @@
 <?php
 
-use Icinga\Web\Controller\ActionController;
+use Icinga\Web\Controller;
 
-class Pnp4nagios_IndexController extends ActionController
+class Pnp4nagios_IndexController extends Controller
 {
     public function indexAction()
     {
