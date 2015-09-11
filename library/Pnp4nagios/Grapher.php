@@ -48,6 +48,9 @@ class Grapher extends GrapherHook
     {
         if (! $object->process_perfdata) return;
 
+        // Skip preview images when missing, for local installations only
+        if (false === strpos($this->baseUrl, '://') && ! $this->has($object)) return;
+
         if ($object instanceof Host) {
             $service = '_HOST_';
         } elseif ($object instanceof Service) {
