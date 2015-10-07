@@ -41,7 +41,7 @@ class Grapher extends GrapherHook
         }
 
         $host = $object->host_name;
-        return is_file($this->getRrdFilename($host, $service));
+        return is_file($this->getXmlFilename($host, $service));
     }
 
     public function getPreviewHtml(MonitoredObject $object)
