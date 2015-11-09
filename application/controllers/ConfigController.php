@@ -1,23 +1,23 @@
 <?php
+/* Icinga Web 2 | (c) 2013-2015 Icinga Development Team | GPLv2+ */
+
+namespace Icinga\Module\Pnp4nagios\Controllers;
 
 use Icinga\Web\Controller;
+use Icinga\Module\Pnp4nagios\Forms\Config\GeneralConfigForm;
 
-class Pnp4nagios_ConfigController extends Controller
+class ConfigController extends Controller
 {
+    /**
+     * General configuration
+     */
     public function indexAction()
     {
-        $this->view->tabs = $this->Module()->getConfigTabs()->activate('config');
-        $hintHtml = $this->view->escape($this->translate(
-            'Configuration form is still missing in this prototype.'
-          . ' In case your PNP4Nagios config path is not %s or your base'
-          . ' PNP4Nagios web url differs from %s please create a config file'
-          . ' in %s following this example:'
-        ));
-        $this->view->escapedHint = sprintf(
-            $hintHtml,
-            '<b>/etc/pnp4nagios</b>',
-            '<b>/pnp4nagios</b>',
-            '<b>' . $this->Config()->getConfigFile() . '</b>'
-        );
+        $form = new GeneralConfigForm();
+        $form->setIniConfig($this->Config());
+        $form->handleRequest();
+
+        $this->view->form = $form;
+        $this->view->tabs = $this->Module()->getConfigTabs()->activate('general');
     }
 }
