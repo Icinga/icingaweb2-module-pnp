@@ -4,7 +4,6 @@
 namespace Icinga\Module\Pnp4nagios\Forms\Config;
 
 use Icinga\Forms\ConfigForm;
-use Icinga\Web\Notification;
 
 class GeneralConfigForm extends ConfigForm
 {
@@ -40,44 +39,5 @@ class GeneralConfigForm extends ConfigForm
                 'description'   => $this->translate('The base URL of your Pnp4Nagios installation.')
             )
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function onSuccess()
-    {
-        $sections = array();
-        foreach ($this->getValues() as $sectionAndPropertyName => $value) {
-            if ($value !== '') {
-                list($section, $property) = explode('_', $sectionAndPropertyName, 2);
-                $sections[$section][$property] = $value;
-            }
-        }
-
-        foreach ($sections as $section => $config) {
-            $this->config->setSection($section, $config);
-        }
-
-        if ($this->save()) {
-            Notification::success(t('New configuration has successfully been stored'));
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function onRequest()
-    {
-        $values = array();
-        foreach ($this->config as $section => $properties) {
-            foreach ($properties as $name => $value) {
-                $values[$section . '_' . $name] = $value;
-            }
-        }
-
-        $this->populate($values);
     }
 }
