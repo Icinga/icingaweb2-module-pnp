@@ -1,0 +1,77 @@
+# Icinga Web 2 - Head for multiple monitoring backends.
+# Copyright (C) 2015 Icinga Development Team
+# This file is distributed under the same license as Pnp Module.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Pnp Module (1.0.0)\n"
+"Report-Msgid-Bugs-To: dev@icinga.org\n"
+"POT-Creation-Date: 2015-11-17 11:56+0100\n"
+"PO-Revision-Date: 2015-11-17 12:01+0100\n"
+"Last-Translator: Thomas Gelf <thomas@gelf.net>\n"
+"Language: de_DE\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: /usr/local/icingaweb-modules/pnp/library/Pnp/ProvidedHook/Grapher.php:224
+msgid "25 Hours"
+msgstr "25 Stunden"
+
+#: /usr/local/icingaweb-modules/pnp/library/Pnp/ProvidedHook/Grapher.php:223
+msgid "4 Hours"
+msgstr "4 Stunden"
+
+#: /usr/local/icingaweb-modules/pnp/configuration.php:8
+msgid "Config"
+msgstr "Konfiguration"
+
+#: /usr/local/icingaweb-modules/pnp/configuration.php:7
+msgid "Configure this module"
+msgstr "Dieses Modul konfigurieren"
+
+#: /usr/local/icingaweb-modules/pnp/library/Pnp/ProvidedHook/Grapher.php:226
+msgid "One Month"
+msgstr "Ein Monat"
+
+#: /usr/local/icingaweb-modules/pnp/library/Pnp/ProvidedHook/Grapher.php:225
+msgid "One Week"
+msgstr "Eine Woche"
+
+#: /usr/local/icingaweb-modules/pnp/library/Pnp/ProvidedHook/Grapher.php:227
+msgid "One Year"
+msgstr "Ein Jahr"
+
+#: /usr/local/icingaweb-modules/pnp/application/forms/Config/GeneralConfigForm.php:29
+msgid "PNP4Nagios configuration"
+msgstr "PNP4Nagios Konfiguration"
+
+#: /usr/local/icingaweb-modules/pnp/application/forms/Config/GeneralConfigForm.php:30
+msgid "PNP4Nagios configuration path name (e.g. /etc/pnp4nagios)"
+msgstr "PNP4Nagios Konfigurationspfad (z.b. /etc/pnp4nagios)"
+
+#: /usr/local/icingaweb-modules/pnp/application/forms/Config/GeneralConfigForm.php:38
+msgid "PNP4Nagios url"
+msgstr "PNP4Nagios URL"
+
+#: /usr/local/icingaweb-modules/pnp/application/forms/Config/GeneralConfigForm.php:16
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+#: /usr/local/icingaweb-modules/pnp/application/forms/Config/GeneralConfigForm.php:39
+msgid "The base URL of your PNP4Nagios installation (e.g. /pnp4nagios)"
+msgstr "Basis-URL deiner PNP4Nagios installation (z.B. /pnp4nagios)"
+
+#~ msgid ""
+#~ "Configuration form is still missing in this prototype. In case your "
+#~ "PNP4Nagios config path is not %s or your base PNP4Nagios web url differs "
+#~ "from %s please create a config file in %s following this example:"
+#~ msgstr ""
+#~ "Dieser Prototyp stellt noch kein Konfigurationsformular bereit. Sollte "
+#~ "dein PNP4Nagios Konfigurationspfad nicht %s sein oder deine PNP4Nagios "
+#~ "URL sich von %s unterscheiden erstelle bitte unter %s eine dem folgenden "
+#~ "Beispiel entprechende Konfigurationsdatei:"
