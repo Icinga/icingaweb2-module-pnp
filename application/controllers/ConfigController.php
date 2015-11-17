@@ -1,10 +1,10 @@
 <?php
 /* Icinga Web 2 | (c) 2013-2015 Icinga Development Team | GPLv2+ */
 
-namespace Icinga\Module\Pnp4nagios\Controllers;
+namespace Icinga\Module\Pnp\Controllers;
 
 use Icinga\Web\Controller;
-use Icinga\Module\Pnp4nagios\Forms\Config\GeneralConfigForm;
+use Icinga\Module\Pnp\Forms\Config\GeneralConfigForm;
 
 class ConfigController extends Controller
 {

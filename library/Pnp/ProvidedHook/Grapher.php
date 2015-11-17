@@ -1,6 +1,6 @@
 <?php
 
-namespace Icinga\Module\Pnp4nagios\ProvidedHook;
+namespace Icinga\Module\Pnp\ProvidedHook;
 
 use Icinga\Application\Config;
 use Icinga\Exception\ConfigurationError;
@@ -189,7 +189,7 @@ class Grapher extends GrapherHook
             '%s on %s, %s', $service, $host, $viewName
         );
 
-        $url = Url::fromPath('pnp4nagios', array(
+        $url = Url::fromPath('pnp', array(
             'host' => $this->pnpClean($host),
             'srv' => $this->pnpClean($service),
             'view' => $view

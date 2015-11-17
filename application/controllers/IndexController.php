@@ -2,7 +2,7 @@
 
 use Icinga\Web\Controller;
 
-class Pnp4nagios_IndexController extends Controller
+class Pnp_IndexController extends Controller
 {
     public function indexAction()
     {
