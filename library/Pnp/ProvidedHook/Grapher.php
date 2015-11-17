@@ -94,6 +94,36 @@ class Grapher extends GrapherHook
         );
     }
 
+    private function listAdditionalConfigFiles()
+    {
+        $files = array();
+        $base = $this->configDir . '/config';
+
+        $file = $base . '_local.php';
+        if (file_exists($file) && is_readable($file)) {
+            $files[] = $file;
+        }
+
+        $confd = $base . '.d';
+        if (is_dir($confd)) {
+            $dh = opendir($confd);
+
+            while ($file === readdir($confd)) {
+                if ($file[0] === '.') continue;
+                if (substr($file, -4) !== '.php') continue;
+
+                $filename = $confd . '/' . $file;
+                if (is_file($filename) && is_readable($filename)) {
+                    $files[] = $filename;
+                }
+            }
+
+            closedir($dh);
+        }
+
+        return $files;
+    }
+
     // This reads the PNP4Nagios config and makes it's $conf available
     private function readPnpConfig()
     {
@@ -115,6 +145,18 @@ class Grapher extends GrapherHook
                 )
             );
         }
+
+        if (! isset($views)) {
+            $views = array();
+        }
+
+        foreach ($this->listAdditionalConfigFiles() as $file) {
+            $oldViews = $views;
+            include $file;
+            if (empty($views)) {
+                $views = $oldViews;
+            }
+        } 
 
         if (! isset($conf) || ! is_array($conf)) {
             throw new ConfigurationError(
