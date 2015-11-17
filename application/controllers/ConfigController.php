@@ -18,6 +18,6 @@ class ConfigController extends Controller
         $form->handleRequest();
 
         $this->view->form = $form;
-        $this->view->tabs = $this->Module()->getConfigTabs()->activate('general');
+        $this->view->tabs = $this->Module()->getConfigTabs()->activate('config');
     }
 }

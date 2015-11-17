@@ -3,8 +3,8 @@
 
 /** @var $this \Icinga\Application\Modules\Module */
 
-$this->provideConfigTab('general', array(
-    'title' => $this->translate('Adjust the general configuration of the Pnp4Nagios module'),
-    'label' => $this->translate('General'),
+$this->provideConfigTab('config', array(
+    'title' => $this->translate('Configure this module'),
+    'label' => $this->translate('Config'),
     'url' => 'config'
 ));

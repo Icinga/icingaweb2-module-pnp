@@ -13,7 +13,7 @@ class GeneralConfigForm extends ConfigForm
     public function init()
     {
         $this->setName('form_config_pnp4nagios_general');
-        $this->setSubmitLabel(t('Save Changes'));
+        $this->setSubmitLabel($this->translate('Save Changes'));
     }
 
     /**
@@ -26,8 +26,8 @@ class GeneralConfigForm extends ConfigForm
             'pnp4nagios_config_dir',
             array(
                 'value'         => '/etc/pnp4nagios',
-                'label'         => $this->translate('Pnp4Nagios Configuration'),
-                'description'   => $this->translate('The path to the configuration of your Pnp4Nagios installation.')
+                'label'         => $this->translate('PNP4Nagios configuration'),
+                'description'   => $this->translate('PNP4Nagios configuration path name (e.g. /etc/pnp4nagios)')
             )
         );
         $this->addElement(
@@ -35,8 +35,8 @@ class GeneralConfigForm extends ConfigForm
             'pnp4nagios_base_url',
             array(
                 'value'         => '/pnp4nagios',
-                'label'         => $this->translate('Pnp4Nagios Url'),
-                'description'   => $this->translate('The base URL of your Pnp4Nagios installation.')
+                'label'         => $this->translate('PNP4Nagios url'),
+                'description'   => $this->translate('The base URL of your PNP4Nagios installation (e.g. /pnp4nagios)')
             )
         );
     }
