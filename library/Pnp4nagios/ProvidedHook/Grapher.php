@@ -1,13 +1,13 @@
 <?php
 
-namespace Icinga\Module\Pnp4nagios;
+namespace Icinga\Module\Pnp4nagios\ProvidedHook;
 
 use Icinga\Application\Config;
 use Icinga\Exception\ConfigurationError;
+use Icinga\Application\Hook\GrapherHook;
 use Icinga\Module\Monitoring\Object\MonitoredObject;
 use Icinga\Module\Monitoring\Object\Host;
 use Icinga\Module\Monitoring\Object\Service;
-use Icinga\Web\Hook\GrapherHook;
 use Icinga\Web\Url;
 
 class Grapher extends GrapherHook
