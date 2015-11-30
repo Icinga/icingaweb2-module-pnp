@@ -105,10 +105,9 @@ class Grapher extends GrapherHook
         }
 
         $confd = $base . '.d';
-        if (is_dir($confd)) {
+        if (is_dir($confd) && is_readable($confd)) {
             $dh = opendir($confd);
-
-            while ($file === readdir($confd)) {
+            while ($file === readdir($dh)) {
                 if ($file[0] === '.') continue;
                 if (substr($file, -4) !== '.php') continue;
 
