@@ -5,8 +5,10 @@
 PNP is an addon to Icinga  which analyzes performance data provided by plugins
 and stores them automatically into RRD-databases.
 
-This module integrates PNP4Nagios into your [Icinga Web 2](https://www.icinga.org/icinga/screenshots/icinga-web-2/) frontend. It requires [PNP4Nagios](https://docs.pnp4nagios.org/) to installed and configured.
-
+This module integrates PNP4Nagios into your
+[Icinga Web 2](https://www.icinga.org/icinga/screenshots/icinga-web-2/)
+frontend. It requires [PNP4Nagios](https://docs.pnp4nagios.org/)
+to installed and configured.
 
 ## Installation
 

@@ -1,5 +1,5 @@
 Name: PNP4Nagios
-Version: 1.0.0
+Version: 1.0.1
 Depends: monitoring>=2.1.0
 Description: Timeseries grapher integration for PNP4Nagios
  PNP is an addon to Icinga or Nagios which analyzes performance data
