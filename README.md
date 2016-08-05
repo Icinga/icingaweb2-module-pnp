@@ -14,7 +14,7 @@ to installed and configured.
 
 Just drop this module to a folder named `pnp` in one of your Icinga Web 2 module
 directories. Then enable it in your frontend (Configuration -> Modules
- -> pnp4nagios -> enable) and it should work out of the box. Check the modules
+ -> pnp -> enable) and it should work out of the box. Check the modules
 config tab right there in case you are using a customized installation instead
 of standard PNP4Nagios packages.
 
