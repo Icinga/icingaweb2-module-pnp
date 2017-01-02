@@ -46,10 +46,14 @@ class Grapher extends GrapherHook
 
     public function getPreviewHtml(MonitoredObject $object)
     {
-        if (! $object->process_perfdata) return;
+        if (! $object->process_perfdata) {
+            return '';
+        }
 
         // Skip preview images when missing, for local installations only
-        if (false === strpos($this->baseUrl, '://') && ! $this->has($object)) return;
+        if (false === strpos($this->baseUrl, '://') && ! $this->has($object)) {
+            return '';
+        }
 
         if ($object instanceof Host) {
             $service = '_HOST_';
@@ -192,7 +196,7 @@ class Grapher extends GrapherHook
     private function pnpClean($string)
     {
         if ($string === false) {
-            return;
+            return null;
         }
         return preg_replace('~[ :/\\\]~', '_', $string);
     }
