@@ -19,6 +19,10 @@ git checkout master
 git log --use-mailmap | grep ^Author: | cut -f2- -d' ' | sort | uniq > AUTHORS
 ```
 
+## Update metadata
+
+Edit and update [module.info](module.info).
+
 ## Changelog
 
 Update the [CHANGELOG.md](CHANGELOG.md) file.
