@@ -21,10 +21,14 @@ class GraphController extends Controller
         $host = $this->getParam('host');
         $service = $this->getParam('srv');
 
+        $serviceTitle = '';
+        if ($service && $service !== '_HOST_') {
+            $serviceTitle = sprintf(' | %s: %s', $this->translate('Service'), $service);
+        }
         $this->view->title = $title = sprintf('%s: %s%s',
             $this->translate('Host'),
             $host,
-            ($service ? sprintf(' | %s: %s', $this->translate('Service'), $service) : '')
+            $serviceTitle
         );
 
         $this->getTabs()->add('graph', array(
