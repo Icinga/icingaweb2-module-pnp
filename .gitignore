@@ -1,1 +1,7 @@
+## editors
+.*.sw[op]
 .idea/
+*~
+
+## vendor stuff
+/vendor/
