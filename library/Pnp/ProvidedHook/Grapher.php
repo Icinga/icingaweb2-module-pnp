@@ -254,7 +254,7 @@ class Grapher extends GrapherHook
             $url,
             htmlspecialchars($title),
             $imgUrl,
-            htmlspecialchars($viewName)
+            htmlspecialchars(mt('pnp', 'Loading') . '...')
         );
     }
 
