@@ -234,7 +234,7 @@ class Grapher extends GrapherHook
             '%s on %s, %s', $service, $host, $viewName
         );
 
-        $url = Url::fromPath('pnp', array(
+        $url = Url::fromPath('pnp/graph', array(
             'host' => $this->pnpClean($host),
             'srv' => $this->pnpClean($service),
             'view' => $view
@@ -254,7 +254,7 @@ class Grapher extends GrapherHook
             $url,
             htmlspecialchars($title),
             $imgUrl,
-            htmlspecialchars($viewName)
+            htmlspecialchars(mt('pnp', 'Loading') . '...')
         );
     }
 

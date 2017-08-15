@@ -13,6 +13,8 @@ class ConfigController extends Controller
      */
     public function indexAction()
     {
+        $this->assertPermission('config/modules');
+
         $form = new GeneralConfigForm();
         $form->setIniConfig($this->Config());
         $form->handleRequest();
