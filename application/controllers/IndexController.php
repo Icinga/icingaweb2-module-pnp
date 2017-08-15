@@ -3,20 +3,12 @@
 
 namespace Icinga\Module\Pnp\Controllers;
 
-use Icinga\Web\Controller;
+use Icinga\Module\Pnp\Web\Controller;
 
 class IndexController extends Controller
 {
     public function indexAction()
     {
-        $baseUrl = rtrim($this->Config()->get('pnp4nagios', 'base_url', '/pnp4nagios'), '/');
-
-        $this->view->url = sprintf(
-             '%s/graph?host=%s&srv=%s&view=%d',
-             $baseUrl,
-             urlencode($this->getParam('host')),
-             urlencode($this->getParam('srv')),
-             $this->getParam('view')
-        );
+        $this->redirectNow($this->getRequest()->getUrl()->setPath('pnp/graph'));
     }
 }
