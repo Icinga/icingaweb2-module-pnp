@@ -6,3 +6,14 @@ $this->provideConfigTab('config', array(
     'label' => $this->translate('Config'),
     'url' => 'config'
 ));
+
+
+$menuDisabled = $this->getConfig()->get('pnp4nagios', 'menu_disabled');
+if (! $menuDisabled) {
+    /** @var \Icinga\Web\Navigation\NavigationItem $section */
+    $section = $this->menuSection('pnp');
+    $section->setLabel('PNP')
+        ->setUrl('pnp')
+        ->setIcon('chart-line')
+        ->setPriority(50);
+}

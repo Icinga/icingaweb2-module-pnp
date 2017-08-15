@@ -8,12 +8,10 @@ class Controller extends IcingaController
 {
     public function init()
     {
-        /* TODO
         $this->getTabs()->add('pnp', array(
             'label' => $this->translate('PNP'),
             'url'   => 'pnp',
         ));
-        */
     }
 
     protected function setViewScript($name)

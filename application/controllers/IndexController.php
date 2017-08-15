@@ -9,6 +9,17 @@ class IndexController extends Controller
 {
     public function indexAction()
     {
-        $this->redirectNow($this->getRequest()->getUrl()->setPath('pnp/graph'));
+        $this->getTabs()->activate('pnp');
+
+        $defaultQuery = $this->Config()->get('pnp4nagios', 'default_query', 'host=.pnp-internal&srv=runtime');
+
+        $this->view->title = 'PNP';
+        $this->view->url = sprintf(
+            '%s/graph?%s',
+            $this->getBaseUrl(),
+            $defaultQuery
+        );
+
+        $this->setViewScript('index/iframe');
     }
 }
