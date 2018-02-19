@@ -1,0 +1,203 @@
+diff -urN pnp4nagios.dist/share/pnp/application/config/config.php pnp4nagios/share/pnp/application/config/config.php
+--- pnp4nagios.dist/share/pnp/application/config/config.php	2017-12-07 09:02:41.199591229 +0100
++++ pnp4nagios/share/pnp/application/config/config.php	2018-02-19 14:27:46.655453274 +0100
+@@ -140,3 +140,5 @@
+ $config['auth_multisite_serials']   = "";
+ $config['auth_multisite_secret']    = "";
+ $config['auth_multisite_login_url'] = "/check_mk/login.py";
++$config['auth_icingaweb2_configdir'] = "";
++$config['auth_icingaweb2_libdir'] = "";
+diff -urN pnp4nagios.dist/share/pnp/application/models/auth_icingaweb2.php pnp4nagios/share/pnp/application/models/auth_icingaweb2.php
+--- pnp4nagios.dist/share/pnp/application/models/auth_icingaweb2.php	1970-01-01 01:00:00.000000000 +0100
++++ pnp4nagios/share/pnp/application/models/auth_icingaweb2.php	2017-12-18 00:22:14.713701916 +0100
+@@ -0,0 +1,111 @@
++<?php
++
++use Icinga\Application\EmbeddedWeb;
++use Icinga\Module\Pnp\Authentication\AuthenticateWithIcingaWeb;
++
++class Auth_Icingaweb2_Model
++{
++    private $config;
++
++    private $handler;
++
++    private static $instance;
++
++    public function __construct($config)
++    {
++        $this->config = $config;
++    }
++
++    public static function instance($config)
++    {
++        if (self::$instance === null) {
++            self::$instance = new static($config);
++        }
++
++        return self::$instance;
++    }
++
++    public function check()
++    {
++        $auth = $this->getWebAuth();
++        if (! $auth->isAuthenticated()) {
++            $this->deny('Access denied');
++        }
++
++        return $auth->getUsername();
++    }
++
++    public function isAuthorizedFor($host, $service)
++    {
++        return $this->getWebAuth()->isAuthorizedFor($host, $service);
++    }
++
++    private function getConfigValue($name, $default = null)
++    {
++        if (array_key_exists($name, $this->config)) {
++            $value = $this->config[$name];
++            if ($value === null || $value === '') {
++                return $default;
++            } else {
++                return $value;
++            }
++        } else {
++            return $default;
++        }
++    }
++
++    private function getIcingaWebConfigDir()
++    {
++        $value = $this->getConfigValue('auth_icingaweb2_configdir');
++
++        if ($value === null) {
++            if (array_key_exists('ICINGAWEB_CONFIGDIR', $_SERVER)) {
++                return $_SERVER['ICINGAWEB_CONFIGDIR'];
++            } else {
++                $this->deny('Access denied, got no Icinga Web 2 configuration path');
++            }
++        } else {
++            return $value;
++        }
++    }
++
++    private function deny($msg)
++    {
++        header('HTTP/1.1 401 Unauthorized');
++        $msg = htmlspecialchars($msg);
++        echo("<h1>$msg</h1>");
++        exit;
++    }
++
++    private function getIcingaLibDir()
++    {
++        $value = $this->getConfigValue('auth_icingaweb2_libdir');
++
++        if ($value === null) {
++            if (array_key_exists('ICINGAWEB_LIBDIR', $_SERVER)) {
++                return $_SERVER['ICINGAWEB_LIBDIR'];
++            } else {
++                $this->deny('Access denied, got no Icinga Web 2 library path');
++            }
++        } else {
++            return $value;
++        }
++    }
++
++    private function getWebAuth()
++    {
++        if ($this->handler === null) {
++            $file = $this->getIcingaLibDir() . '/Icinga/Application/EmbeddedWeb.php';
++            require_once $file;
++
++            EmbeddedWeb::start(
++                null,
++                $this->getIcingaWebConfigDir()
++            );
++
++            $this->handler = new AuthenticateWithIcingaWeb();
++        }
++
++        return $this->handler;
++    }
++}
+diff -urN pnp4nagios.dist/share/pnp/application/models/auth.php pnp4nagios/share/pnp/application/models/auth.php
+--- pnp4nagios.dist/share/pnp/application/models/auth.php	2018-02-19 12:26:40.427177520 +0100
++++ pnp4nagios/share/pnp/application/models/auth.php	2017-12-14 00:56:43.965800814 +0100
+@@ -16,6 +16,8 @@
+     public $AUTH_ENABLED = FALSE;
+     public $REMOTE_USER = NULL;
+ 
++    private $authHandler;
++
+     public function __construct() {
+         $this->config = new Config_Model;
+         $this->config->read_config();
+@@ -37,6 +39,12 @@
+             if($this->REMOTE_USER !== null)
+                 return;
+         }
++        if ($this->REMOTE_USER === NULL && $this->config->conf['auth_icingaweb2_configdir']) {
++            $webAuth = Auth_Icingaweb2_Model::instance($this->config->conf);
++            $this->REMOTE_USER = $webAuth->check();
++            $this->authHandler = $webAuth;
++            $this->AUTH_ENABLED = TRUE;
++        }
+ 
+         if($this->AUTH_ENABLED === TRUE && $this->REMOTE_USER === NULL){
+             throw new Kohana_exception("error.remote_user_missing");
+@@ -99,27 +107,27 @@
+         if($host == "pnp-internal"){
+             return TRUE;
+         }
+-
+         if($service === NULL || $service == "_HOST_" || $service == "Host Perfdata"){
+             $users = explode(",", $this->config->conf['allowed_for_all_hosts']);
+             if (in_array($this->REMOTE_USER, $users)) {
+                 return TRUE;
+             }
+             $query  = "GET hosts\nColumns: name\nFilter: name = $host\nAuthUser: ".$this->REMOTE_USER;
+-            $result = $this->queryLivestatus($query);
++            $service = null;
+         }else{
+             $users = explode(",", $this->config->conf['allowed_for_all_services']);
+             if (in_array($this->REMOTE_USER, $users)) {
+                 return TRUE;
+             }
+             $query  = "GET services\nColumns: host_name description\nFilter: host_name = $host\nFilter: description = $service\nAuthUser: ".$this->REMOTE_USER;
+-            $result = $this->queryLivestatus($query);
+         }
+ 
+-        if(sizeof($result) > 0){
+-            return TRUE;
+-        }else{
+-            return FALSE;
++        if ($this->authHandler === null) {
++            $result = $this->queryLivestatus($query);
++
++            return sizeof($result) > 0;
++        } else {
++            return $this->authHandler->isAuthorizedFor($host, $service);
+         }
+     }
+ 
+diff -urN pnp4nagios.dist/share/pnp/application/models/config.php pnp4nagios/share/pnp/application/models/config.php
+--- pnp4nagios.dist/share/pnp/application/models/config.php	2017-12-07 09:02:41.199591229 +0100
++++ pnp4nagios/share/pnp/application/models/config.php	2018-02-19 14:33:21.379620308 +0100
+@@ -37,11 +37,12 @@
+         $conf['auth_multisite_htpasswd']  = Kohana::config('core.auth_multisite_htpasswd');
+         $conf['auth_multisite_secret']    = Kohana::config('core.auth_multisite_secret');
+         $conf['auth_multisite_login_url'] = Kohana::config('core.auth_multisite_login_url');
+-	
+-	$scheme['Reds']     = array ('#FEE0D2','#FCBBA1','#FC9272','#FB6A4A','#EF3B2C','#CB181D','#A50F15','#67000D');
++        $conf['auth_icingaweb2_configdir'] = Kohana::config('core.auth_icingaweb2_configdir');
++
++	    $scheme['Reds']     = array ('#FEE0D2','#FCBBA1','#FC9272','#FB6A4A','#EF3B2C','#CB181D','#A50F15','#67000D');
+ 
+         $views = Kohana::config('core.views');
+-        
++
+         if (is_readable($config . ".php")) {
+             include ($config . ".php");
+         }else {
