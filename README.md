@@ -103,6 +103,25 @@ Remove the duplicated views in one of them, e.g. in `config_local.php`:
 
 The related issue can be found [here](https://github.com/Icinga/icingaweb2-module-pnp/issues/18).
 
+### Preview Graphs Missing in Detail View
+
+First off, the module needs to read the local PNP configuration files and as such
+you need to ensure that the path can be read by the web server user. SELinux may prevent
+this too next to wrong permissions or wrong paths. This path defaults to
+`/etc/pnp4nagios` and requires adjustments for your own needs.
+If the module is not able to read the configuration, an error will be logged
+to the debug log and no graph will be rendered.
+
+Also ensure that the user who is not seeing the graphs actually has the permission
+to view the PNP module. Navigate into your roles configuration and verify that.
+
+PNP stores meta information in an XML file next to the actual RRD file. If this file
+is missing in your RRD data store, the module won't render graphs. Verify that PNP and
+NPCD are running and troubleshoot why metrics are not updated. The debug level helps here.
+
+Last but not least, if there are no graphs available, the detail view won't show any graphs.
+You can verify that by opening the native PNP interface and search for the corresponding host
+or service.
 
 ## Thanks
 
