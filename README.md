@@ -17,9 +17,8 @@
 This module integrates [PNP](https://docs.pnp4nagios.org/) into [Icinga Web 2](https://www.icinga.com/products/icinga-web-2/)
 and allows you to view beautiful graphs in the host/service detail view.
 
-<img src="https://github.com/Icinga/icingaweb2-module-pnp/blob/master/doc/screenshot/detail_view.png" alt="Detail View" height="300">
-
-<img src="https://github.com/Icinga/icingaweb2-module-pnp/blob/master/doc/screenshot/iframe.png" alt="Iframe" height="300">
+[![Detail View](doc/screenshot/detail_view.png)](doc/screenshot/detail_view.png)
+[![Iframe](doc/screenshot/iframe.png)](doc/screenshot/iframe.png)
 
 ## License
 
@@ -81,8 +80,7 @@ for forwarding the Icinga Web 2 auth session to PNP.
 
 Navigate to `Modules - PNP - Config` and specify the settings.
 
-<img src="https://github.com/Icinga/icingaweb2-module-pnp/blob/master/doc/screenshot/config_form.png" alt="Iframe" height="300">
-
+[![Configuration](doc/screenshot/config_form.png)](doc/screenshot/config_form.png)
 
 ## FAQ
 
@@ -133,5 +131,6 @@ or service.
 There are many ways to contribute to the Icinga Web module for PNP --
 whether it be sending patches, testing, reporting bugs, or reviewing and
 updating the documentation. Every contribution is appreciated!
+
 
 
