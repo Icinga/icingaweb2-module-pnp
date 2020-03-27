@@ -1,3 +1,4 @@
+Module: pnp
 Name: PNP4Nagios
 Version: 1.1.0
 Depends: monitoring>=2.1.0
