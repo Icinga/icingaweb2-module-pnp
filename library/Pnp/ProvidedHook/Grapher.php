@@ -8,6 +8,7 @@ use Icinga\Application\Hook\GrapherHook;
 use Icinga\Module\Monitoring\Object\MonitoredObject;
 use Icinga\Module\Monitoring\Object\Host;
 use Icinga\Module\Monitoring\Object\Service;
+use Icinga\Module\Monitoring\Plugin\PerfdataSet;
 use Icinga\Web\Url;
 
 class Grapher extends GrapherHook
@@ -57,44 +58,56 @@ class Grapher extends GrapherHook
 
         if ($object instanceof Host) {
             $service = '_HOST_';
+            $perfdata = $object->properties->host_perfdata;
         } elseif ($object instanceof Service) {
             $service = $object->service_description;
+            $perfdata = $object->properties->service_perfdata;
         } else {
             return '';
         }
 
         $host = $object->host_name;
+        $perfdata = PerfdataSet::fromString($perfdata)->asArray();
+        $perfdataCount = count($perfdata);
+        if ($perfdataCount === 0) return;
 
         $html = '<table style="width: 100%; max-width: 40em; text-align: center;'
               . ' font-size: 0.8em; line-height: 0.8em; table-layout: fixed">'
               . "\n  <tr>\n";
         $viewKeys = array_reverse(array_keys($this->pnpViews));
+        if ($perfdataCount>1) $html .= "<th></th>\n";
         foreach ($viewKeys as $view) {
             $html .= '<th>' . htmlspecialchars($this->getViewName($view)) . "</th>\n";
         }
-        $html .= "  </tr>\n  <tr>\n";
-        foreach ($viewKeys as $view) {
-            $html .= '    <td style="border-left: 1px solid #555; padding-right: 3px">'
-                   . $this->getPreviewImg($host, $service, $view)
-                   . "</td>\n";
+        $html .= "  </tr>\n";
+        foreach ($perfdata as $perfdataSourceKey=>$perfdataSourceValue) {
+            $html .= "<tr>\n";
+            if ($perfdataCount>1) $html .= "<td>".$perfdataSourceValue->getLabel()."</td>\n";
+            foreach ($viewKeys as $view) {
+                $html .= '    <td style="border-left: 1px solid #555; padding-right: 3px">'
+                       . $this->getPreviewImg($host, $service, $view, $perfdataSourceKey)
+                       . "</td>\n";
+            }
+            $html .= "</tr>\n";
         }
-        $html .= "</tr></table>\n";
+        $html .= "</table>\n";
         return $html;
     }
 
     // Currently unused, but would work fine. This is for tiny preview images
     // in list views
-    public function getSmallPreviewImage($host, $service = null)
+    public function getSmallPreviewImage($host, $service = null, $source)
     {
         if ($service === null) {
             $service = '_HOST_';
         }
 
         return sprintf(
-            '<img src="%s/image?host=%s&srv=%s&view=0&source=0&h=20&w=50" alt="" style="float: right" />',
+            '<img src="%s/image?host=%s&srv=%s&view=0&source=%d&h=20&w=50" alt="" style="float: right" />',
             $this->baseUrl,
             urlencode($this->pnpClean($host)),
-            urlencode($this->pnpClean($service))
+            urlencode($this->pnpClean($service)),
+            $source
         );
     }
 
@@ -221,7 +234,7 @@ class Grapher extends GrapherHook
         return $this->getBasePath($host, $service) . '.xml';
     }
 
-    private function getPreviewImg($host, $service, $view)
+    private function getPreviewImg($host, $service, $view, $source)
     {
         $viewName = $this->getViewName($view);
 
@@ -240,11 +253,12 @@ class Grapher extends GrapherHook
             'view' => $view
         ));
         $imgUrl = sprintf(
-            '%s/image?host=%s&srv=%s&view=%d&source=0&w=120&h=30',
+            '%s/image?host=%s&srv=%s&view=%d&source=%d&w=120&h=30',
             $this->baseUrl,
             urlencode($this->pnpClean($host)),
             urlencode($this->pnpClean($service)),
-            $view
+            $view,
+            $source
         );
 
         $html = '<a href="%s" title="%s"><img src="%s" alt="%s" width="100%%" height="30" /></a>';
